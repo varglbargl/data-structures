@@ -10,12 +10,13 @@ var makeQueue = function(){
   instance.enqueue = function(value){
     storage[counter] = value;
     counter++;
+    return storage;
   };
 
   instance.dequeue = function(){
     var first = storage[0];
-    for (var keys in storage){
-      
+    for (var key in storage){
+      storage[key - 1] = storage[key];
     }
     delete storage[counter];
     counter--;
@@ -23,7 +24,12 @@ var makeQueue = function(){
   };
 
   instance.size = function(){
-    return counter;
+    if(counter < 0){
+      counter = 0;
+      return counter;
+    } else {
+      return counter;
+    }
   };
 
   return instance;

@@ -5,15 +5,22 @@ var makeLinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(val){
-    list[val] = list.tail;
-    debugger;
-    list.tail = val;
+    var node = makeNode(val);
+    if (list.tail){
+      list.tail.next = val;
+    }
+    list.tail = node;
     if (list.head === null){
-      list.head = val;
+      list.head = node;
     }
   };
 
   list.removeHead = function(){
+    var temp = list[list.head];
+    var result = list.head;
+    delete list[list.head];
+    list.head = temp;
+    return result;
   };
 
   list.contains = function(){

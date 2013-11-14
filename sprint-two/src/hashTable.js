@@ -14,11 +14,27 @@ var HashTable = function(){
 
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
+  var collision = {};
+  window.collisionTable = {};
+
+  this._storage.each(function(item, key){
+    if (key == i){
+      collision = {existing: {item: item, key: key}, newHash: {unhashed: k, item: v}};
+    }
+  });
   console.log(i);
-  this._storage.set(i, v);
+  if (collision.existing){
+    this._storage.set(collision.existing["key"] + 1, collision.newHash["item"]);
+    collisionTable[collision.newHash.unhashed] = collision.existing.key + 1;
+  } else {
+    this._storage.set(i, v);
+  }
 };
 
 HashTable.prototype.retrieve = function(k){
+  if (collisionTable[k]) {
+    return this._storage.get(collisionTable[k]);
+  }
   var i = getIndexBelowMaxForKey(k, this._limit);
   return this._storage.get(i);
 };

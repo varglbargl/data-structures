@@ -25,27 +25,40 @@ describe("linkedList", function() {
     linkedList.addToTail("Scarlet Johansen");
     expect(linkedList.head).toEqual({value: "Scarlet Johansen" , next: null});
   });
+
   it ("should move current tail when adding a new tail", function(){
     linkedList.addToTail(1);
     linkedList.addToTail(2);
-    expect(linkedList.tail).toEqual({value:2,next:null});
+    expect(linkedList.tail).toEqual({value:2, next:null});
   });
-  it ("should make the last tail point to the new tail when adding a new tail", function(){
-    linkedList.addToTail(2);
+
+  it ("should make head's value reference tail when passed 2 nodes", function(){
     linkedList.addToTail(1);
-    expect(linkedList.head).toEqual({value: 1, next: 2});
+    linkedList.addToTail(2);
+    expect(linkedList.head).toEqual({value: 1, next: {value: 2, next: null}});
   });
+
   it ("should remove the head or else it gets the hose again", function(){
-    linkedList.addToTail(2);
     linkedList.addToTail(1);
+    linkedList.addToTail(2);
     linkedList.removeHead();
-    expect(linkedList[2]).toEqual(undefined);
-    expect(linkedList.head).toEqual(1);
+    expect(linkedList[1]).toEqual(undefined);
+    expect(linkedList.head).toEqual({value: 2, next: null});
   });
-  it ("should return the last head", function(){
-    linkedList.addToTail(2);
+
+  it ("should return the last head when it is removed", function(){
     linkedList.addToTail(1);
+    linkedList.addToTail(2);
     var result = linkedList.removeHead();
-    expect(result).toEqual(2);
+    expect(result).toEqual(1);
+  });
+
+  it ("should return true if list contans the passed value and false if it doesn't contain it", function(){
+    linkedList.addToTail(1);
+    linkedList.addToTail(2);
+    var shouldBeTrue = linkedList.contains(2);
+    var shouldBeFalse = linkedList.contains("gold dubloons");
+    expect(shouldBeTrue).toEqual(true);
+    expect(shouldBeFalse).toEqual(false);
   });
 });

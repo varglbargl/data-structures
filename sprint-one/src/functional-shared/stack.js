@@ -1,11 +1,12 @@
 var makeStack = function() {
   // Hey! Copy your code from src/functional/stack.js and paste it here
   var instance = {};
-  instance = stackMethods;
   // Use an object with numeric keys to store values
   instance.storage = {};
   instance.length = 0; // Hint: set an initial value here
-
+  instance.push = stackMethods.push;
+  instance.pop = stackMethods.pop;
+  instance.size = stackMethods.size;
   // Implement the methods below
 
 

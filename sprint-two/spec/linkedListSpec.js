@@ -16,5 +16,13 @@ describe("linkedList", function() {
     expect(linkedList.contains).toEqual(jasmine.any(Function));
   });
 
-  // add more tests here to test the functionality of linkedList
+  it("should link to null if there is no tail", function(){
+    linkedList.addToTail(6);
+    expect(linkedList["6"]).toEqual(null);
+  });
+
+  it("should give head", function () {
+    linkedList.addToTail("Scarlet Johansen");
+    expect(linkedList.head).toEqual("Scarlet Johansen");
+  });
 });

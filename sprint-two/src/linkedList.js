@@ -4,7 +4,13 @@ var makeLinkedList = function(){
   list.head = null;
   list.tail = null;
 
-  list.addToTail = function(){
+  list.addToTail = function(val){
+    list[val] = list.tail;
+    debugger;
+    list.tail = val;
+    if (list.head === null){
+      list.head = val;
+    }
   };
 
   list.removeHead = function(){

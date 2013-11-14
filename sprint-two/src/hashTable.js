@@ -18,7 +18,7 @@ HashTable.prototype.insert = function(k, v){
   window.collisionTable = {};
 
   this._storage.each(function(item, key){
-    if (key == i){
+    if (key === i && item !== v){
       collision = {existing: {item: item, key: key}, newHash: {unhashed: k, item: v}};
     }
   });

@@ -14,32 +14,31 @@ var HashTable = function(){
 
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
-  var collision = {};
-  window.collisionTable = {};
-
-  this._storage.each(function(item, key){
-    if (key === i && item !== v){
-      collision = {existing: {item: item, key: key}, newHash: {unhashed: k, item: v}};
-    }
-  });
   console.log(i);
-  if (collision.existing){
-    this._storage.set(collision.existing["key"] + 1, collision.newHash["item"]);
-    collisionTable[collision.newHash.unhashed] = collision.existing.key + 1;
-  } else {
-    this._storage.set(i, v);
+
+  var existing = this._storage.get(i);
+  if (Array.isArray(existing)){
+    existing.push(k,v);
+    this._storage.set(i, existing);
+  }else{
+    this._storage.set(i, [k,v]);
   }
+
 };
 
 HashTable.prototype.retrieve = function(k){
-  if (collisionTable[k]) {
-    return this._storage.get(collisionTable[k]);
-  }
   var i = getIndexBelowMaxForKey(k, this._limit);
-  return this._storage.get(i);
+  var result = this._storage.get(i);
+  for (var j = 0 ; j < result.length ; j++){
+    if (result[j] === k){
+      return result[j];
+    }
+  }
+  return false;
 };
 
-HashTable.prototype.remove = function(){
+HashTable.prototype.remove = function(k){
+  this.retrieve(k);
 };
 
 // NOTE: For this code to work, you will NEED the code from hashTableHelpers.js

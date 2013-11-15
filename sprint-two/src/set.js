@@ -7,7 +7,9 @@ var makeSet = function(){
 var setPrototype = {};
 
 setPrototype.add = function(val){
-  this._storage.push(val);
+  if(!this.contains(val)){
+    this._storage.push(val);
+  }
 };
 
 setPrototype.contains = function(val){

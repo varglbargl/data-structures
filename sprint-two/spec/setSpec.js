@@ -23,4 +23,9 @@ describe("set", function() {
     set.remove("testing is boring");
     expect(set.contains("testing is boring")).toEqual(false);
   });
+  it("should not add values if they exist in storage", function(){
+    set.add("bla");
+    set.add("bla");
+    expect(set._storage.length).toEqual(1);
+  });
 });

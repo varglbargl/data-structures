@@ -19,13 +19,22 @@ describe("tree", function() {
     tree.addChild("baby");
     var testSeed = makeTree();
     testSeed.value = "baby";
-    expect(tree.children).toEqual(testSeed);
+    testChildren = [testSeed];
+    expect(tree.children).toEqual(testChildren);
+  });
+
+  it("should find if the tree contains the value", function(){
+    tree.addChild(1);
+    tree.addChild("flute");
+    expect(tree.contains(1)).toEqual(true);
   });
 
   it("should find if the tree contains the value anywhere", function(){
     tree.addChild(1);
     tree.addChild("flute");
     tree.children[0].addChild(45);
-  })
+    expect(tree.contains(45)).toEqual(true);
+    expect(tree.contains(46)).toEqual(false);
+  });
   // Add more tests here to test the functionality of tree.
 });

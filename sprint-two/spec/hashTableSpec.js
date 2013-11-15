@@ -20,5 +20,17 @@ describe("hashTable", function() {
     expect(hashTable.retrieve(v2)).toEqual(v2);
   });
 
+  it("should remove values", function(){
+    // force the hash function to return 0
+    spyOn(window, 'getIndexBelowMaxForKey').andReturn(0);
+    var v1 = 'val1', v2 = 'val2';
+    hashTable.insert(v2, v2);
+    hashTable.insert(v1, v1);
+    hashTable.remove(v2);
+    expect(hashTable.retrieve(v2)).toEqual(false);
+    hashTable.remove(v1);
+    expect(hashTable.retrieve(v1)).toEqual(false);
+  });
+
   // add more tests!
 });

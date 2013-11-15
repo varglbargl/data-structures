@@ -61,4 +61,27 @@ describe("linkedList", function() {
     expect(shouldBeTrue).toEqual(true);
     expect(shouldBeFalse).toEqual(false);
   });
+
+  it ("should return true if list contans the passed value and false if it doesn't contain it", function(){
+    linkedList.addToTail(1);
+    linkedList.addToTail(2);
+    linkedList.addToHead(3);
+    var shouldBeTrue = linkedList.contains(3);
+    expect(shouldBeTrue).toEqual(true);
+    expect(linkedList.head).toEqual({value: 3, next: {value: 1, next: {value: 2, next: null}}});
+  });
+  it ("should remove the tail and set a new tail", function(){
+    linkedList.addToTail(1);
+    linkedList.addToTail(2);
+    linkedList.addToTail(3);
+    linkedList.addToTail(4);
+    linkedList.addToTail(5);
+    linkedList.removeTail();
+    linkedList.removeTail();
+    linkedList.removeTail();
+    linkedList.removeTail();
+    linkedList.removeTail();
+    expect(linkedList.tail).toEqual(null);
+  });
+
 });

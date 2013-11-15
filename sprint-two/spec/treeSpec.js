@@ -17,10 +17,7 @@ describe("tree", function() {
 
   it("should add children that are new trees with values", function(){
     tree.addChild("baby");
-    var testSeed = makeTree();
-    testSeed.value = "baby";
-    testChildren = [testSeed];
-    expect(tree.children).toEqual(testChildren);
+    expect(tree.children[0].value).toEqual("baby");
   });
 
   it("should find if the tree contains the value", function(){
@@ -35,6 +32,23 @@ describe("tree", function() {
     tree.children[0].addChild(45);
     expect(tree.contains(45)).toEqual(true);
     expect(tree.contains(46)).toEqual(false);
+  });
+  it("should know its parent",function(){
+    tree.addChild("baby");
+    tree.addChild("flute");
+    tree.children[0].addChild(45);
+    expect(tree.parent).toEqual(null);
+    expect(tree.children[0].parent).toEqual(tree);
+    expect(tree.children[0].children[0].parent.value).toEqual("baby");
+  });
+  it("should not live with its parent when it grows up", function(){
+    tree.addChild(1);
+    tree.addChild("flute");
+    tree.children[0].addChild(45);
+    var newTree = tree.children[0].removeFromParent();
+    expect(tree.contains("flute")).toEqual(true);
+    expect(tree.contains(45)).toEqual(false);
+    expect(newTree.parent).toEqual(null);
   });
   // Add more tests here to test the functionality of tree.
 });

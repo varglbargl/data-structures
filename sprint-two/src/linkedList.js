@@ -40,7 +40,6 @@ var makeLinkedList = function(){
 
   list.removeTail = function (checkNode){
     var node = checkNode || list.head;
-    debugger;
       if (node.next){
       if (node.next.next !== null){
         list.removeTail(node.next);

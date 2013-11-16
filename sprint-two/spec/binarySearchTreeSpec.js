@@ -38,7 +38,7 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(49);
     binarySearchTree.insert(32);
     binarySearchTree.insert(35);
-    binarySearchTree.insert(51);
+    binarySearchTree.insert(52);
     var nearest = function(val){
       if (Math.abs(test-val) < Math.abs(test-closest)){
         closest=val;
@@ -46,7 +46,7 @@ describe("binarySearchTree", function() {
       return closest;
     };
     var result = binarySearchTree.depthFirstLog(nearest);
-    expect(result).toEqual(5);
+    expect(result).toEqual(49);
   });
     it("should accept a callback function to method breadthFirstLog", function(){
     var closest = 0;
@@ -57,10 +57,9 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(49);
     binarySearchTree.insert(32);
     binarySearchTree.insert(35);
-    binarySearchTree.insert(51);
+    binarySearchTree.insert(52);
     var nearest = function(val){
       console.log('binarytree ->' + val);
-      return "hooray!"
     };
     var result = binarySearchTree.breadthFirstLog(nearest);
     //expect(result).toEqual(5);

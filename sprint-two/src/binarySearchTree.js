@@ -43,7 +43,6 @@ BinarySearchTree.prototype.depthFirstLog = function(func){
   return func(this.value);
 };
 BinarySearchTree.prototype.breadthFirstLog = function(func,nodesBelow,currentNode,nodesToRight,farLeft){
-  debugger;
   if (currentNode === null){
     return func();
   }

@@ -31,13 +31,14 @@ describe("binarySearchTree", function() {
 
   it("should accept a callback function to method depthFirstLog", function(){
     var closest = 0;
-    var test = 81;
+    var test = 50;
     binarySearchTree.insert(3);
     binarySearchTree.insert(80);
     binarySearchTree.insert(99);
-    binarySearchTree.insert(19);
+    binarySearchTree.insert(49);
     binarySearchTree.insert(32);
     binarySearchTree.insert(35);
+    binarySearchTree.insert(51);
     var nearest = function(val){
       if (Math.abs(test-val) < Math.abs(test-closest)){
         closest=val;
@@ -45,7 +46,24 @@ describe("binarySearchTree", function() {
       return closest;
     };
     var result = binarySearchTree.depthFirstLog(nearest);
-    expect(result).toEqual(80);
+    expect(result).toEqual(5);
+  });
+    it("should accept a callback function to method breadthFirstLog", function(){
+    var closest = 0;
+    var test = 50;
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(80);
+    binarySearchTree.insert(99);
+    binarySearchTree.insert(49);
+    binarySearchTree.insert(32);
+    binarySearchTree.insert(35);
+    binarySearchTree.insert(51);
+    var nearest = function(val){
+      console.log('binarytree ->' + val);
+      return "hooray!"
+    };
+    var result = binarySearchTree.breadthFirstLog(nearest);
+    //expect(result).toEqual(5);
   });
 
 

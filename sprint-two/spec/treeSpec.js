@@ -33,6 +33,7 @@ describe("tree", function() {
     expect(tree.contains(45)).toEqual(true);
     expect(tree.contains(46)).toEqual(false);
   });
+
   it("should know its parent",function(){
     tree.addChild("baby");
     tree.addChild("flute");
@@ -41,6 +42,7 @@ describe("tree", function() {
     expect(tree.children[0].parent).toEqual(tree);
     expect(tree.children[0].children[0].parent.value).toEqual("baby");
   });
+
   it("should not live with its parent when it grows up", function(){
     tree.addChild(1);
     tree.addChild("flute");
@@ -50,5 +52,14 @@ describe("tree", function() {
     expect(tree.contains(45)).toEqual(false);
     expect(newTree.parent).toEqual(null);
   });
-  // Add more tests here to test the functionality of tree.
+
+  it("should call a function on every node of a tree", function(){
+    tree.addChild(1);
+    tree.addChild("flute");
+    tree.children[0].addChild(45);
+    tree.children[0].addChild("dog");
+    tree.traverse(function(val){
+      console.log(val);
+    });
+  });
 });

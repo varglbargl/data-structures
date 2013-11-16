@@ -31,7 +31,6 @@ HashTable.prototype.insert = function(k, v){
       existing.push([k,v]);
       this._count++;
     }
-    console.log(existing);
     this._storage.set(hash, existing);
   }else{
     this._storage.set(hash, [[k,v]]);
@@ -75,7 +74,7 @@ HashTable.prototype.remove = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var result = this._storage.get(i);
   if(Array.isArray(result)){
-    if ( typeof result[1] === "undefined"){
+    if (result[1] === undefined){
       this._storage.set(i,undefined);
       this._count--;
     }else{
@@ -88,7 +87,6 @@ HashTable.prototype.remove = function(k){
       }
     }
     if (this._count < this._limit*0.25){
-      debugger;
       this.resize(0.5);
     }
   }else {

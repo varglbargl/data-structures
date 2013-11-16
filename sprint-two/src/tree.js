@@ -6,6 +6,7 @@ var makeTree = function(){
   newTree.addChild = treeMethods.addChild;
   newTree.contains = treeMethods.contains;
   newTree.removeFromParent = treeMethods.removeFromParent;
+  newTree.traverse = treeMethods.traverse;
   return newTree;
 };
 
@@ -23,9 +24,11 @@ treeMethods.contains = function(val){
   if (this.value === val){
     return true;
   }
-  if (this.children != []){
+  if (this.children.length !== 0){
     for(var i = 0 ; i < this.children.length ; i++){
-      return this.children[i].contains(val);
+      if(this.children[i].contains(val)){
+         return true;
+       }
     }
   }
   return false;
@@ -34,4 +37,11 @@ treeMethods.removeFromParent = function(){
   this.parent.children.splice(this.parent.children.indexOf(this),1);
   this.parent = null;
   return this;
+};
+
+treeMethods.traverse = function(callback){
+  for (var i = 0; i < this.children.length; i++) {
+    this.children[i].traverse(callback);
+  }
+  return callback(this.value);
 };

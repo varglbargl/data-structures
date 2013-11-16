@@ -74,3 +74,41 @@ BinarySearchTree.prototype.breadthFirstLog = function(func,nodesBelow,currentNod
   //then if nodesToRight is empty array, recurse to far left, pass nodesBelow as nodesToRight.
 
 };
+BinarySearchTree.prototype.sort = function(node,sortedNodes){
+  var node = node || this;
+  var sortedNodes = sortedNodes || [];
+  if (node.left){
+    this.sort(node.left,sortedNodes);
+  }
+  sortedNodes.push(node);
+  if (node.right){
+    this.sort(node.right,sortedNodes);
+  }
+  return sortedNodes;
+};
+
+BinarySearchTree.prototype.chunk = function(array,chunkSize){
+  var i,j,chunkedArrays = [],chunk = chunkSize;
+  for (i=0,j=array.length; i<j; i+=chunk) {
+    chunkedArrays.push(array.slice(i,i+chunk));
+  }
+  return chunkedArrays;
+};
+
+BinarySearchTree.prototype.rebalance = function(chunkOfNodes,notFirstTime){
+  if (chunkOfNodes === undefined){
+    ///start process 
+  } else if(chunkOfNodes.length === 0){
+    return;
+  }
+  var twoChunks = this.chunk(chunkOfNodes,"half");
+  this.insert(twoChunks[0].pop().value);
+  this.rebalance(twoChunks[0]);
+  if (twoChunks[1] !== undefined){
+    this.rebalance(twoChunks[1]);
+  }
+  if (chunkOfNodes === undefined){
+    return;
+  }
+  
+};

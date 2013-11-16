@@ -19,4 +19,3 @@ setPrototype.contains = function(val){
 setPrototype.remove = function(val){
   this._storage.splice(this._storage.indexOf(val),1);
 };
-  

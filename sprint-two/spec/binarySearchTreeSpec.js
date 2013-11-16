@@ -39,13 +39,16 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(32);
     binarySearchTree.insert(35);
     binarySearchTree.insert(52);
+    var logAll = function(val){
+    //  console.log('binarytree ->' + val);
+    };
     var nearest = function(val){
       if (Math.abs(test-val) < Math.abs(test-closest)){
         closest=val;
       }
       return closest;
     };
-    var result = binarySearchTree.depthFirstLog(nearest);
+    var result = binarySearchTree.depthFirstLog(logAll);
     expect(result).toEqual(49);
   });
     it("should accept a callback function to method breadthFirstLog", function(){
@@ -59,11 +62,22 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(35);
     binarySearchTree.insert(52);
     var nearest = function(val){
-      console.log('binarytree ->' + val);
+    //  console.log('binarytree ->' + val);
     };
     var result = binarySearchTree.breadthFirstLog(nearest);
     //expect(result).toEqual(5);
   });
+    it("should sort nodes", function(){
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(80);
+    binarySearchTree.insert(99);
+    binarySearchTree.insert(49);
+    binarySearchTree.insert(32);
+    binarySearchTree.insert(35);
+    binarySearchTree.insert(52);
+    result = binarySearchTree.sort();
+    console.log(result);
+    });
 
 
 

@@ -28,4 +28,24 @@ describe("set", function() {
     set.add("bla");
     expect(set._storage.length).toEqual(1);
   });
+  it("should handle numbers", function(){
+    set.add(1);
+    set.add(3);
+    expect(set._storage.length).toEqual(2);
+    expect(set.contains(3)).toEqual(true);
+  });
+  it("should handle input object of any type", function(){
+    var bob = [1,"bob",false,null,undefined];
+    set.add({1:"hi","hello":948383});
+    set.add(function(){console.log('hello');});
+    set.add(bob);
+    set.add(bob);
+    set.add(undefined);
+    set.add(null);
+    set.add(undefined);
+    set.add(null);
+    expect(set._storage.length).toEqual(5);
+    expect(set.contains(null)).toEqual(true);
+    expect(set.contains(undefined)).toEqual(true);
+  });
 });

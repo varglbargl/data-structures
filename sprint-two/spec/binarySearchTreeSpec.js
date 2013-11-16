@@ -46,7 +46,6 @@ describe("binarySearchTree", function() {
     };
     var result = binarySearchTree.depthFirstLog(nearest);
     expect(result).toEqual(80);
-    console.log(binarySearchTree);
   });
 
 

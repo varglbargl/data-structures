@@ -1,5 +1,6 @@
 var HashTable = function(){
   this._limit = 8;
+  this._count = 0;
 
   // Use a limited array to store inserted elements.
   // It'll keep you from using too much space. Usage:
@@ -13,15 +14,42 @@ var HashTable = function(){
 };
 
 HashTable.prototype.insert = function(k, v){
-  var i = getIndexBelowMaxForKey(k, this._limit);
-  console.log(i);
-
-  var existing = this._storage.get(i);
+  if (this._count > this._limit*0.75){
+    debugger;
+    var allTuples=[];
+    this._count = 0;
+    this._limit = this._limit*2;
+    this._storage.each(function(bucket){
+      if (bucket !== undefined){
+        for(var i=0 ; i < bucket.length ; i++){
+          allTuples.push(bucket[i]);
+        }
+      }
+    });
+    this._storage = makeLimitedArray(this._limit);
+    for(var i=0 ; i < allTuples.length ; i++){
+      this.insert(allTuples[i][0], allTuples[i][1]);
+    }
+  }
+  var hash = getIndexBelowMaxForKey(k, this._limit);
+  var overWrote = false;
+  var existing = this._storage.get(hash);
   if (Array.isArray(existing)){
-    existing.push(k,v);
-    this._storage.set(i, existing);
+    for (var j=0;j<existing.length;j++){
+      if (existing[j][0] === k){
+        existing[j]=[k,v];
+        overWrote = true;
+      }
+    }
+    if (overWrote === false){
+      existing.push([k,v]);
+      this._count++;
+    }
+    console.log(existing);
+    this._storage.set(hash, existing);
   }else{
-    this._storage.set(i, [k,v]);
+    this._storage.set(hash, [[k,v]]);
+    this._count++;
   }
 
 };
@@ -31,25 +59,30 @@ HashTable.prototype.retrieve = function(k){
   var result = this._storage.get(i);
   if (Array.isArray(result)){
     for (var j = 0 ; j < result.length ; j++){
-      if (result[j] === k){
-        return result[j];
+      if (result[j][0] === k){
+        return result[j][1];
       }
     }
   }
   return false;
+};
+HashTable.prototype.getCount = function(){
+  return this._count;
 };
 
 HashTable.prototype.remove = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var result = this._storage.get(i);
   if(Array.isArray(result)){
-    if ( result.length === 2){
+    if ( typeof result[1] === "undefined"){
       this._storage.set(i,undefined);
+      this._count--;
     }else{
       for (var j = 0 ; j < result.length ; j++){
-        if (result[j] === k){
-          result.splice(result[j],2);
+        if (result[j][0] === k){
+          result.splice(result[j],1);
           this._storage.set(i,result);
+          this._count--;
         }
       }
     }

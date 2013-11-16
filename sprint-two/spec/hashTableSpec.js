@@ -38,7 +38,7 @@ describe("hashTable", function() {
     hashTable.remove(v4);
     expect(hashTable.getCount()).toEqual(2);
   });
-  it("should keep a count of values in the hashtable", function(){
+  it("should double the hashtable size when count is over 75% of limit", function(){
     hashTable.insert(v2, v2);
     hashTable.insert(v1, v3);
     hashTable.insert("foo", v4);
@@ -48,6 +48,22 @@ describe("hashTable", function() {
     hashTable.insert("apple", v4);
     hashTable.insert(v3, v1);
     expect(hashTable.getCount()).toEqual(8);
+  });
+    it("should halve the hashtable size when the count is under 25% of limit", function(){
+    hashTable.insert(v2, v2);
+    hashTable.insert(v1, v3);
+    hashTable.insert("foo", v4);
+    hashTable.insert(v4, v1);
+    hashTable.insert("bar", v2);
+    hashTable.insert("bat", v3);
+    hashTable.insert("apple", v4);
+    hashTable.insert(v3, v1);
+    hashTable.remove(v3);
+    hashTable.remove("apple");
+    hashTable.remove("bat");
+    hashTable.remove("bar");
+    hashTable.remove(v4);
+    expect(hashTable.getCount()).toEqual(3);
   });
 
   // add more tests!

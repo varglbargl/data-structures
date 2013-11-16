@@ -15,21 +15,7 @@ var HashTable = function(){
 
 HashTable.prototype.insert = function(k, v){
   if (this._count > this._limit*0.75){
-    debugger;
-    var allTuples=[];
-    this._count = 0;
-    this._limit = this._limit*2;
-    this._storage.each(function(bucket){
-      if (bucket !== undefined){
-        for(var i=0 ; i < bucket.length ; i++){
-          allTuples.push(bucket[i]);
-        }
-      }
-    });
-    this._storage = makeLimitedArray(this._limit);
-    for(var i=0 ; i < allTuples.length ; i++){
-      this.insert(allTuples[i][0], allTuples[i][1]);
-    }
+    this.resize(2);
   }
   var hash = getIndexBelowMaxForKey(k, this._limit);
   var overWrote = false;
@@ -53,7 +39,22 @@ HashTable.prototype.insert = function(k, v){
   }
 
 };
-
+HashTable.prototype.resize = function(multiplier){
+  var allTuples=[];
+  this._count = 0;
+  this._limit = this._limit * multiplier;
+  this._storage.each(function(bucket){
+    if (bucket !== undefined){
+      for(var i=0 ; i < bucket.length ; i++){
+        allTuples.push(bucket[i]);
+      }
+    }
+  });
+  this._storage = makeLimitedArray(this._limit);
+  for(var i=0 ; i < allTuples.length ; i++){
+    this.insert(allTuples[i][0], allTuples[i][1]);
+  }
+};
 HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var result = this._storage.get(i);
@@ -86,9 +87,13 @@ HashTable.prototype.remove = function(k){
         }
       }
     }
+    if (this._count < this._limit*0.25){
+      debugger;
+      this.resize(0.5);
+    }
   }else {
     return false;
-    }
+  }
 };
 
 // NOTE: For this code to work, you will NEED the code from hashTableHelpers.js

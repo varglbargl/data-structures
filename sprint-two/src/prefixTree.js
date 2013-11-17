@@ -5,16 +5,28 @@ var PrefixTree = function () {
   this.prefix = "";
   this.children = [];
   this.isWord = false;
+  this.distance = 0;
 };
 
-PrefixTreeNodes.prototype = {
+PrefixTree.prototype = {
+
+  makeNode: function (word, distance) {
+    // take word (string) as argument
+    // incriment distance from top of tree
+    // make new node in the children array of current node
+      // ignore duplicate strings in children arrays
+    // recurse for each letter in word
+      // if distance is the same as word.length, set isWord to true
+        // and return
+      // ignore if word is less than 3 letters from top
+  },
 
   build: function (wordList) {
     // take word list (array) as argument
     // itterate through word list
-    // split first letter off as node
-    // recurse with remaining letters
-    // do not allow duplicate letters in one node's children
+    for (var i = 0; i < wordList.length; i++) {
+      this.makeNode(wordList[i]);
+    }
   },
 
   lookup: function (word) {
@@ -26,8 +38,8 @@ PrefixTreeNodes.prototype = {
 
   testWordiness: function (word) {
     // take a word (string) as an argument
-    // trickle word down word list and test end node for isWord
-
+    // trickle word down tree to completion
+    // return that node's isWord value
   }
 
 };

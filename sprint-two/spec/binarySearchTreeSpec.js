@@ -48,7 +48,7 @@ describe("binarySearchTree", function() {
       }
       return closest;
     };
-    var result = binarySearchTree.depthFirstLog(logAll);
+    var result = binarySearchTree.depthFirstLog(nearest);
     expect(result).toEqual(49);
   });
     it("should accept a callback function to method breadthFirstLog", function(){
@@ -68,17 +68,37 @@ describe("binarySearchTree", function() {
     //expect(result).toEqual(5);
   });
     it("should sort nodes", function(){
-    binarySearchTree.insert(3);
-    binarySearchTree.insert(80);
-    binarySearchTree.insert(99);
-    binarySearchTree.insert(49);
-    binarySearchTree.insert(32);
-    binarySearchTree.insert(35);
-    binarySearchTree.insert(52);
-    result = binarySearchTree.sort();
-    console.log(result);
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(80);
+      binarySearchTree.insert(99);
+      binarySearchTree.insert(49);
+      binarySearchTree.insert(32);
+      binarySearchTree.insert(35);
+      binarySearchTree.insert(52);
+      result = binarySearchTree.sort();
+      console.log(result);
     });
-
-
+    it("should rebalance when it's told to", function(){
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(80);
+      binarySearchTree.insert(99);
+      binarySearchTree.insert(49);
+      binarySearchTree.insert(32);
+      binarySearchTree.insert(35);
+      binarySearchTree.insert(52);
+      binarySearchTree.rebalance();
+    });
+    
+    it("should find the max height", function(){
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(3);
+      binarySearchTree.insert(80);
+      binarySearchTree.insert(99);
+      binarySearchTree.insert(49);
+      binarySearchTree.insert(32);
+      binarySearchTree.insert(35);
+      binarySearchTree.insert(52);
+      expect(binarySearchTree.maxMinHeight()).toEqual([5,2]);
+    });
 
 });

@@ -3,23 +3,54 @@ var BinarySearchTree = function(val){
   this.right = null;
   this.value = val;
 };
-BinarySearchTree.prototype.insert = function(val){
+BinarySearchTree.prototype.insert = function(val,maxAndMin){
   var node = new BinarySearchTree(val);
+  var maxAndMin = maxAndMin || this.maxMinHeight();
+  if (maxAndMin[0] > maxAndMin[1] * 2){
+    //this.rebalance();
+  }
   if(this.value < val){
     if(!this.right) {
       this.right = node;
     }else{
-      this.right.insert(val);
+      this.right.insert(val,true);
     }
   }
   if(this.value > val){
     if(!this.left) {
       this.left = node;
     }else{
-      this.left.insert(val);
+      this.left.insert(val,true);
     }
   }
 };
+
+
+BinarySearchTree.prototype.maxMinHeight = function(node){
+  var node = node || this;
+  var max;
+  var min;
+  var leftHeight = [0,0] , rightHeight = [0,0];
+  if (node.left){
+    leftHeight = this.maxMinHeight(node.left);
+  }
+  if (node.right){
+    rightHeight = this.maxMinHeight(node.right);
+  }
+  if (rightHeight[0] > leftHeight[0]){
+    max = rightHeight[0] + 1;
+  } else {
+    max = leftHeight[0] + 1;
+  }
+  if (rightHeight[1] < leftHeight[1]){
+    min = rightHeight[1] + 1;
+  } else {
+    min = leftHeight[1] + 1;
+  }
+  return [max,min];
+};
+
+
 BinarySearchTree.prototype.contains = function(val){
   if (this.value == val){
     return true;
@@ -87,28 +118,28 @@ BinarySearchTree.prototype.sort = function(node,sortedNodes){
   return sortedNodes;
 };
 
-BinarySearchTree.prototype.chunk = function(array,chunkSize){
-  var i,j,chunkedArrays = [],chunk = chunkSize;
-  for (i=0,j=array.length; i<j; i+=chunk) {
-    chunkedArrays.push(array.slice(i,i+chunk));
-  }
-  return chunkedArrays;
+BinarySearchTree.prototype.chunk = function(array){
+  var chunkedArray = [];
+  chunkedArray.push(array.splice(0,Math.ceil(array.length/2)),array);
+  return chunkedArray;
 };
 
-BinarySearchTree.prototype.rebalance = function(chunkOfNodes,notFirstTime){
+BinarySearchTree.prototype.rebalance = function(chunkOfNodes,newTree){
   if (chunkOfNodes === undefined){
-    ///start process 
+    var twoChunks = this.chunk(this.sort());
+    var newTree = new BinarySearchTree(twoChunks[0].pop().value);
   } else if(chunkOfNodes.length === 0){
     return;
   }
-  var twoChunks = this.chunk(chunkOfNodes,"half");
-  this.insert(twoChunks[0].pop().value);
-  this.rebalance(twoChunks[0]);
+  var twoChunks = twoChunks || this.chunk(chunkOfNodes);
+  newTree.insert(twoChunks[0].pop().value);
+  newTree.rebalance(twoChunks[0],newTree);
   if (twoChunks[1] !== undefined){
-    this.rebalance(twoChunks[1]);
+    newTree.rebalance(twoChunks[1],newTree);
   }
   if (chunkOfNodes === undefined){
-    return;
+    this.left = newTree.left;
+    this.right = newTree.right;
+    this.value = newTree.value;
   }
-  
 };

@@ -24,6 +24,10 @@ describe("prefixTree", function() {
 
   it("should find at least one word", function() {
     prefixTree.build(sampleWordList);
-    expect(prefixTree.lookup("sou")).toEqual("soup");
+    expect(prefixTree.lookup("sou")).toEqual(["soup"]);
+  });
+
+  it("should not die on build with a long wordlist", function() {
+    prefixTree.build(longerWordlist);
   });
 });

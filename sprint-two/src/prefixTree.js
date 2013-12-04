@@ -11,55 +11,54 @@ var PrefixTree = function () {
 PrefixTree.prototype = {
 
   makeNode: function (word, depth) {
-    depth = depth || 0;
-    //console.log(depth);
+    this.depth = depth || 0;
     var node = new PrefixTree();
 
-    this.value = word.slice(0, depth);
+    this.value = word.slice(0, this.depth);
 
-    if( depth === word.length ){
+    if( this.depth === word.length ){
       this.isWord = true;
       return this;
     }
 
     var alreadyFound = -1;
     for( var i = 0; i < this.children.length; i++ ){
-      if( this.children[i].value === word.slice( 0, depth+1 ) ){
+      if( this.children[i].value === word.slice( 0, this.depth+1 ) ){
         alreadyFound = i;
         break;
       }
     }
 
     if( alreadyFound === -1 ){
-      //console.log(this);
-      this.children.push( node.makeNode(word, depth+1) );
+      this.children.push( node.makeNode(word, this.depth+1) );
     } else {
-      this.children[alreadyFound].makeNode(word, depth+1);
+      this.children[alreadyFound].makeNode(word, this.depth+1);
     }
-    //console.log(node);
     return this;
-    // take word (string) as argument
-    // make new node in the children array of current node
-
-      // ignore duplicate values in children arrays
-    // recurse for each letter in word
-      // ignore if word is less than 3 letters from top so it doesnt choke on letter 1
   },
 
   build: function (wordList) {
-    // take word list (array) as argument
-    // itterate through word list
     for( var i = 0; i < wordList.length; i++ ){
       this.makeNode(wordList[i]);
     }
+    // ya that's literally it.
   },
 
   lookup: function (word) {
+    var results = [];
     // take word (string) as argument
+    var start;
+
+    var climbTree = function (string, depth) {
+
+    };
+
+
     // follow string down tree to completion
     // iterate down from there to find all possible paths from that node
     // add all nodes where isWord === true to an array
     // return array.
+    return results;
   }
 
 };

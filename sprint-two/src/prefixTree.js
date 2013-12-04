@@ -1,4 +1,4 @@
-var sampleWordList = ["soup", "soap", "tarp", "carp", "cart", "car", "a",
+var sampleWordlist = ["soup", "soap", "tarp", "carp", "cart", "car", "a",
   "as", "ass", "assess", "assassin", "assassinate", "assassinations"];
 
 var PrefixTree = function () {
@@ -37,27 +37,48 @@ PrefixTree.prototype = {
     return this;
   },
 
-  build: function (wordList) {
-    for( var i = 0; i < wordList.length; i++ ){
-      this.makeNode(wordList[i]);
+  build: function (wordlist) {
+    for( var i = 0; i < wordlist.length; i++ ){
+      wordlist[i] = wordlist[i].toLowerCase();
+      this.makeNode(wordlist[i]);
     }
     // ya that's literally it.
   },
 
   lookup: function (word) {
+    word = word.toLowerCase();
     var results = [];
-    // take word (string) as argument
     var start;
 
-    var climbTree = function (string, depth) {
-
+    var findStart = function (string, node) {
+      var subString = string.slice( 0, node.depth+1 );
+      if( node.depth === string.length ){
+        start = node;
+      } else {
+        for( var i = 0; i < node.children.length; i++ ){
+          if( node.children[i].value === subString ){
+            findStart(string, node.children[i]);
+            break;
+          }
+        }
+      }
     };
 
+    var climbTree = function (node) {
+      for( var i = 0; i < node.children.length; i++ ){
+        if( node.children[i].isWord ){
+          results.push(node.children[i].value);
+        }
+        if( node.children[i].children.length !== 0 ){
+          climbTree(node.children[i]);
+        }
+      }
+    };
 
-    // follow string down tree to completion
-    // iterate down from there to find all possible paths from that node
-    // add all nodes where isWord === true to an array
-    // return array.
+    findStart(word, this);
+
+    climbTree(start);
+
     return results;
   }
 

@@ -31,7 +31,7 @@ describe("prefixTree", function() {
     expect(prefixTree.lookup("sou")).toEqual(["soup"]);
   });
 
-  it("should probably find more than one word sometimes, yeah?", function() {
+  it("should probably find more than one word sometimes too", function() {
     prefixTree.build(sampleWordlist);
     expect(prefixTree.lookup("so")).toEqual(["soup", "soap"]);
   });

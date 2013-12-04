@@ -76,7 +76,7 @@ describe("binarySearchTree", function() {
       binarySearchTree.insert(35);
       binarySearchTree.insert(52);
       result = binarySearchTree.sort();
-      console.log(result);
+      //console.log(result);
     });
     it("should rebalance when it's told to", function(){
       binarySearchTree.insert(3);

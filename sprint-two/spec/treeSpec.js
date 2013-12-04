@@ -59,7 +59,7 @@ describe("tree", function() {
     tree.children[0].addChild(45);
     tree.children[0].addChild("dog");
     tree.traverse(function(val){
-      console.log(val);
+      //console.log(val);
     });
   });
 });

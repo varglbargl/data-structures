@@ -1,6 +1,6 @@
 $(document).ready(function () {
   var prefixTree = new PrefixTree();
-  prefixTree.build(longWordlist);
+  prefixTree.build(scrabbleWordlist);
 
   $(".word").keyup(function () {
     var input = $(".word").val();

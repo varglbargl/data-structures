@@ -58,13 +58,16 @@ PrefixTree.prototype = {
         for( var i = 0; i < node.children.length; i++ ){
           if( node.children[i].value === subString ){
             findStart(string, node.children[i]);
-            break;
+            return;
           }
         }
       }
     };
 
     var climbTree = function (node) {
+      if( !node ){
+        return;
+      }
       for( var i = 0; i < node.children.length; i++ ){
         if( node.children[i].isWord ){
           results.push(node.children[i].value);
@@ -80,6 +83,61 @@ PrefixTree.prototype = {
     climbTree(start);
 
     return results;
-  }
+  },
 
+  lookupByNumber: function (number) {
+    number = number.toString() || "0"
+    var results = [];
+    var starts = [];
+
+    if( number.indexOf("1") !== -1 || number.indexOf("0") !== -1 ){
+      return "Stop, just stop...\nThat's stupid.\nYou're stupid.\nThere's no letters on 1 or 0.\n\nYou moron."
+    }
+
+    var phoneDigitsToLetters = {
+      2: 'ABC',
+      3: 'DEF',
+      4: 'GHI',
+      5: 'JKL',
+      6: 'MNO',
+      7: 'PQRS',
+      8: 'TUV',
+      9: 'WXYZ'
+    };
+
+    var findStarts = function (string, node) {
+      var subString = string.slice( 0, node.depth+1 );
+      if( node.depth === string.length ){
+        starts.push(node);
+      }
+      for( var i = 0; i < node.children.length; i++ ){
+        if( node.children[i].value === subString ){
+          findStart(string, node.children[i]);
+          break;
+        }
+      }
+    };
+
+    findStarts()
+
+    return results;
+  }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

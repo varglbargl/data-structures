@@ -92,7 +92,7 @@ PrefixTree.prototype = {
     var words = [];
 
     if( number.indexOf("1") !== -1 || number.indexOf("0") !== -1 ){
-      return ["Stop, just stop...\nThat's stupid.\nYou're stupid.\nThere's no letters on 1 or 0."]
+      return ["ERROR: There's no letters on 0 or 1"]
     }
 
     var phoneDigitsToLetters = {
@@ -107,7 +107,7 @@ PrefixTree.prototype = {
     };
 
     (function numberCheck (wordSoFar, depth) {
-      if(depth === number.length){
+      if(depth >= number.length){
         words.push(wordSoFar);
         return;
       }
@@ -121,11 +121,8 @@ PrefixTree.prototype = {
     })("", 0);
 
     var findStarts = function (string, node) {
-      if(!node){
-        return;
-      }
       var subString = string.slice( 0, node.depth+1 );
-      if( node.depth === string.length ){
+      if( node.depth === string.length){
         starts.push(node);
       } else {
         for( var i = 0; i < node.children.length; i++ ){
@@ -142,9 +139,6 @@ PrefixTree.prototype = {
     };
 
     var climbTree = function (node) {
-      if( !node ){
-        return;
-      }
       for( var i = 0; i < node.children.length; i++ ){
         if( node.children[i].isWord ){
           results.push(node.children[i].value);
@@ -162,21 +156,3 @@ PrefixTree.prototype = {
     return results;
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

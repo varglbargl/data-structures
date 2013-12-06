@@ -39,14 +39,14 @@ PrefixTree.prototype = {
 
   build: function (wordlist) {
     for( var i = 0; i < wordlist.length; i++ ){
-      wordlist[i] = wordlist[i].toLowerCase();
+      wordlist[i] = wordlist[i];
       this.makeNode(wordlist[i]);
     }
     // ya that's literally it.
   },
 
   lookup: function (word) {
-    word = word.toLowerCase();
+    word = word.toUpperCase();
     var results = [];
     var start;
 
@@ -89,9 +89,10 @@ PrefixTree.prototype = {
     number = number.toString() || "0"
     var results = [];
     var starts = [];
+    var words = [];
 
     if( number.indexOf("1") !== -1 || number.indexOf("0") !== -1 ){
-      return "Stop, just stop...\nThat's stupid.\nYou're stupid.\nThere's no letters on 1 or 0.\n\nYou moron."
+      return ["Stop, just stop...\nThat's stupid.\nYou're stupid.\nThere's no letters on 1 or 0."]
     }
 
     var phoneDigitsToLetters = {
@@ -105,20 +106,58 @@ PrefixTree.prototype = {
       9: 'WXYZ'
     };
 
+    (function numberCheck (wordSoFar, depth) {
+      if(depth === number.length){
+        words.push(wordSoFar);
+        return;
+      }
+      for( var i = 0; i < phoneDigitsToLetters[number[depth]].length; i++ ){
+        if (wordSoFar.length > depth){
+          wordSoFar = wordSoFar.slice(0, wordSoFar.length-1);
+        }
+        wordSoFar += phoneDigitsToLetters[number[depth]][i];
+        numberCheck(wordSoFar, depth + 1)
+      }
+    })("", 0);
+
     var findStarts = function (string, node) {
+      if(!node){
+        return;
+      }
       var subString = string.slice( 0, node.depth+1 );
       if( node.depth === string.length ){
         starts.push(node);
-      }
-      for( var i = 0; i < node.children.length; i++ ){
-        if( node.children[i].value === subString ){
-          findStart(string, node.children[i]);
-          break;
+      } else {
+        for( var i = 0; i < node.children.length; i++ ){
+          if( node.children[i].value === subString ){
+            findStarts(string, node.children[i]);
+            return;
+          }
         }
       }
     };
 
-    findStarts()
+    for (var i = 0; i < words.length; i++) {
+      findStarts(words[i], this);
+    };
+
+    var climbTree = function (node) {
+      if( !node ){
+        return;
+      }
+      for( var i = 0; i < node.children.length; i++ ){
+        if( node.children[i].isWord ){
+          results.push(node.children[i].value);
+        }
+        if( node.children[i].children.length !== 0 ){
+          climbTree(node.children[i]);
+        }
+      }
+    };
+
+    for (var i = 0; i < starts.length; i++) {
+      climbTree(starts[i]);
+    };
 
     return results;
   }

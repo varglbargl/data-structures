@@ -23,7 +23,7 @@ describe("prefixTree", function() {
   });
 
   it("should not die on build with a long wordlist", function() {
-    prefixTree.build(longerWordlist);
+    prefixTree.build(scrabbleWordlist);
   });
 
   it("should find at least one word", function() {

@@ -40,13 +40,12 @@ PrefixTree.prototype = {
   build: function (wordlist) {
     for( var i = 0; i < wordlist.length; i++ ){
       wordlist[i] = wordlist[i];
-      this.makeNode(wordlist[i]);
+      this.makeNode(wordlist[i].toLowerCase());
     }
     // ya that's literally it.
   },
 
   lookup: function (word) {
-    word = word.toUpperCase();
     var results = [];
     var start;
 
@@ -96,14 +95,14 @@ PrefixTree.prototype = {
     }
 
     var phoneDigitsToLetters = {
-      2: 'ABC',
-      3: 'DEF',
-      4: 'GHI',
-      5: 'JKL',
-      6: 'MNO',
-      7: 'PQRS',
-      8: 'TUV',
-      9: 'WXYZ'
+      2: 'abc',
+      3: 'def',
+      4: 'ghi',
+      5: 'jkl',
+      6: 'mno',
+      7: 'pqrs',
+      8: 'tuv',
+      9: 'wxyz'
     };
 
     (function numberCheck (wordSoFar, depth) {
@@ -139,6 +138,9 @@ PrefixTree.prototype = {
     };
 
     var climbTree = function (node) {
+      if( !node ){
+        return;
+      }
       for( var i = 0; i < node.children.length; i++ ){
         if( node.children[i].isWord ){
           results.push(node.children[i].value);

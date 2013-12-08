@@ -6,6 +6,12 @@ var BTree = function () {
 
 BTree.prototype = {
   addValue: function (number) {
+    // trickle number down until this.children.length === 0;
+    if( this.children.length > 0 ){
+      if(this){ // ?????
+
+      }
+    }
     if( this.values.length < 2 ){
       if( this.values.length === 1 ){
         if( number > this.values[0] ){

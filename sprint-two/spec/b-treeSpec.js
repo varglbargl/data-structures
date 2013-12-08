@@ -56,4 +56,12 @@ describe("bTree", function() {
     expect(bTree.children[1].values[0]).toEqual(7);
   });
 
+  it("should ALWAYS trickle number down until it finds the bottom of the tree", function() {
+    bTree.addValue(5);
+    bTree.addValue(6);
+    bTree.addValue(7);
+    bTree.addValue(8);
+    expect(bTree.children[1].values).toEqual([7,8]);
+  });
+
 });

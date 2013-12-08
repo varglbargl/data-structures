@@ -27,4 +27,33 @@ describe("bTree", function() {
     bTree.addValue(6);
     expect(bTree.values.length).toEqual(1);
   });
+
+  it("should branch CORRECTLY when passed three values", function() {
+    bTree.addValue(7);
+    bTree.addValue(6);
+    bTree.addValue(5);
+    expect(bTree.children.length).toEqual(2);
+    expect(bTree.values[0]).toEqual(6);
+    expect(bTree.children[0].values[0]).toEqual(5);
+    expect(bTree.children[1].values[0]).toEqual(7);
+
+    bTree = new BTree();
+    bTree.addValue(5);
+    bTree.addValue(6);
+    bTree.addValue(7);
+    expect(bTree.children.length).toEqual(2);
+    expect(bTree.values[0]).toEqual(6);
+    expect(bTree.children[0].values[0]).toEqual(5);
+    expect(bTree.children[1].values[0]).toEqual(7);
+
+    bTree = new BTree();
+    bTree.addValue(5);
+    bTree.addValue(7);
+    bTree.addValue(6);
+    expect(bTree.children.length).toEqual(2);
+    expect(bTree.values[0]).toEqual(6);
+    expect(bTree.children[0].values[0]).toEqual(5);
+    expect(bTree.children[1].values[0]).toEqual(7);
+  });
+
 });

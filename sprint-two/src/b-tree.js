@@ -23,14 +23,23 @@ BTree.prototype = {
 
       } else {
         if( number < this.values[0] ){
-          var daycare = children.slice();
-          this.children = [new BTree(), new BTree]
+          this.children = [new BTree(), new BTree()];
+          this.children[0].addValue(number);
+          this.children[1].addValue(this.values[1]);
+          this.values = [this.values[0]];
         } else if( number > this.values[1] ){
+          this.children = [new BTree(), new BTree()];
+          this.children[0].addValue(this.values[0]);
+          this.children[1].addValue(number);
+          this.values = [this.values[1]];
 
         } else if( number === this.values[0] || number === this.values[1] ){
           return; // i said no duplicates!
         } else {
-
+          this.children = [new BTree(), new BTree()];
+          this.children[0].addValue(this.values[0]);
+          this.children[1].addValue(this.values[1]);
+          this.values = [number];
         }
       }
     }

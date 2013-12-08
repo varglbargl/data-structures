@@ -22,9 +22,10 @@ describe("prefixTree", function() {
     expect(prefixTree.children[0].children.length).toEqual(1);
   });
 
-  it("should not die on build with a long wordlist", function() {
-    prefixTree.build(scrabbleWordlist);
-  });
+  // Okay okay, it passes. Now stop slowing down my specRunner!
+  // it("should not die on build with a long wordlist", function() {
+  //   prefixTree.build(scrabbleWordlist);
+  // });
 
   it("should find at least one word", function() {
     prefixTree.build(sampleWordlist);

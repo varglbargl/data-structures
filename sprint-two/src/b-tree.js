@@ -19,13 +19,26 @@ BTree.prototype = {
         this.values.push(number);
       }
     } else {
-      if( this.parent ){}
+      if( this.parent ){
+
+      } else {
+        if( number < this.values[0] ){
+          var daycare = children.slice();
+          this.children = [new BTree(), new BTree]
+        } else if( number > this.values[1] ){
+
+        } else if( number === this.values[0] || number === this.values[1] ){
+          return; // i said no duplicates!
+        } else {
+
+        }
+      }
     }
     // if both values are full
       // if current node has a parent
         // take middle value, bubble it up to parent and try to insert
       // if current node has no parent
-        // make node with value of number (B)
+        // make node with value of middle number (B)
         // split current node's values into seperate nodes with one value each (A,C)
         // set those new nodes (A and C) as children of the number's node (B)
           // maybe that's why it's called a B-Tree?
